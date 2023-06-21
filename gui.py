@@ -6,6 +6,10 @@ import random
 from authenticate import authenticate
 import spotipy
 
+
+# Spotify Green Color
+SPOTIFY_GREEN = "#1DB954"
+
 def authenticate():
     CLIENT_ID = "23f6f3d5a7f34c7c821587f67733c833"
     CLIENT_SECRET = "813cafcd03394d808e8214e5c566975c"
@@ -68,53 +72,57 @@ def generate_playlist():
 window = tk.Tk()
 window.title("Playlist Generator")
 window.geometry("376x678")
+window.configure(bg=SPOTIFY_GREEN)
 
-playlist_name_label = tk.Label(window, text="Playlist Name:")
+playlist_name_label = tk.Label(window, text="Name your new playlist:", bg=SPOTIFY_GREEN, fg="white")
 playlist_name_label.pack()
 playlist_name_entry = tk.Entry(window)
 playlist_name_entry.pack()
 
-playlist_length_label = tk.Label(window, text="Playlist Length:")
+playlist_length_label = tk.Label(window, text="Playlist Length:", bg=SPOTIFY_GREEN, fg="white")
 playlist_length_label.pack()
-playlist_length_entry = tk.Entry(window)
+playlist_length_entry = tk.Entry(window, width=3)
 playlist_length_entry.pack()
 
-danceability_label = tk.Label(window, text="Danceability:")
+danceability_label = tk.Label(window, text="Danceability:", bg=SPOTIFY_GREEN, fg="white")
 danceability_label.pack()
-danceability_slider = tk.Scale(window, from_=0, to=1, resolution=0.1, orient=tk.HORIZONTAL)
+danceability_slider = tk.Scale(window, from_=0, to=1, resolution=0.1, orient=tk.HORIZONTAL, bg=SPOTIFY_GREEN, fg="white")
 danceability_slider.pack()
 
-energy_label = tk.Label(window, text="Energy:")
+energy_label = tk.Label(window, text="Energy:", bg=SPOTIFY_GREEN, fg="white")
 energy_label.pack()
-energy_slider = tk.Scale(window, from_=0, to=1, resolution=0.1, orient=tk.HORIZONTAL)
+energy_slider = tk.Scale(window, from_=0, to=1, resolution=0.1, orient=tk.HORIZONTAL, bg=SPOTIFY_GREEN, fg="white")
 energy_slider.pack()
 
-valence_label = tk.Label(window, text="Valence:")
+valence_label = tk.Label(window, text="Valence:", bg=SPOTIFY_GREEN, fg="white")
 valence_label.pack()
-valence_slider = tk.Scale(window, from_=0, to=1, resolution=0.1, orient=tk.HORIZONTAL)
+valence_slider = tk.Scale(window, from_=0, to=1, resolution=0.1, orient=tk.HORIZONTAL, bg=SPOTIFY_GREEN, fg="white")
 valence_slider.pack()
 
-novelty_label = tk.Label(window, text="Novelty:")
+novelty_label = tk.Label(window, text="Novelty:", bg=SPOTIFY_GREEN, fg="white")
 novelty_label.pack()
-novelty_slider = tk.Scale(window, from_=0, to=1, resolution=0.1, orient=tk.HORIZONTAL)
+novelty_slider = tk.Scale(window, from_=0, to=1, resolution=0.1, orient=tk.HORIZONTAL, bg=SPOTIFY_GREEN, fg="white")
 novelty_slider.pack()
 
 method_var = tk.StringVar()
-method_label = tk.Label(window, text="Method:")
+method_label = tk.Label(window, text="Method (Choose one):", bg=SPOTIFY_GREEN, fg="white")
 method_label.pack()
-genres_radio = tk.Radiobutton(window, text="Genres", variable=method_var, value="genres")
+genres_radio = tk.Radiobutton(window, text="Genres", variable=method_var, value="genres", bg=SPOTIFY_GREEN, fg="white")
 genres_radio.pack()
-artists_radio = tk.Radiobutton(window, text="Artists", variable=method_var, value="artists")
+artists_radio = tk.Radiobutton(window, text="Artists", variable=method_var, value="artists", bg=SPOTIFY_GREEN, fg="white")
 artists_radio.pack()
-both_radio = tk.Radiobutton(window, text="Both", variable=method_var, value="both")
+both_radio = tk.Radiobutton(window, text="Both", variable=method_var, value="both", bg=SPOTIFY_GREEN, fg="white")
 both_radio.pack()
 
-genres_label = tk.Label(window, text="Genres (comma-separated):")
+genres_label = tk.Label(window, text="Genres (comma-separated):", bg=SPOTIFY_GREEN, fg="white")
 genres_label.pack()
 genres_entry = tk.Entry(window)
 genres_entry.pack()
 
-generate_button = tk.Button(window, text="Generate Playlist", command=generate_playlist)
+# create a space between the entry and the button
+tk.Label(window, text="", bg=SPOTIFY_GREEN).pack()
+
+generate_button = tk.Button(window, text="Generate Playlist", command=generate_playlist, bg='white', fg=SPOTIFY_GREEN, borderwidth=1)
 generate_button.pack()
 
 window.mainloop()
