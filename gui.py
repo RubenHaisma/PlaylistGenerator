@@ -6,10 +6,6 @@ import random
 from authenticate import authenticate
 import spotipy
 
-
-# Spotify Green Color
-SPOTIFY_GREEN = "#1DB954"
-
 def authenticate():
     CLIENT_ID = "23f6f3d5a7f34c7c821587f67733c833"
     CLIENT_SECRET = "813cafcd03394d808e8214e5c566975c"
@@ -69,11 +65,16 @@ def generate_playlist():
     except Exception as e:
         messagebox.showerror("Error", str(e))
 
+# Spotify Green Color
+SPOTIFY_GREEN = "#1DB954"
+
+# Create the window
 window = tk.Tk()
 window.title("Playlist Generator")
 window.geometry("376x678")
 window.configure(bg=SPOTIFY_GREEN)
 
+# Create the widgets
 playlist_name_label = tk.Label(window, text="Name your new playlist:", bg=SPOTIFY_GREEN, fg="white")
 playlist_name_label.pack()
 playlist_name_entry = tk.Entry(window)
@@ -119,10 +120,12 @@ genres_label.pack()
 genres_entry = tk.Entry(window)
 genres_entry.pack()
 
-# create a space between the entry and the button
+# Create a space between the entry and the button
 tk.Label(window, text="", bg=SPOTIFY_GREEN).pack()
 
+# Generate...
 generate_button = tk.Button(window, text="Generate Playlist", command=generate_playlist, bg='white', fg=SPOTIFY_GREEN, borderwidth=1)
 generate_button.pack()
 
+# Run the application
 window.mainloop()
