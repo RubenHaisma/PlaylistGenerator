@@ -1,0 +1,20 @@
+# Python-specific ignores
+*.pyc
+*.pyo
+__pycache__/
+
+# Spotify credentials file
+credentials.txt
+
+# Virtual environment
+venv/
+
+# IDE-specific ignores
+.idea/
+.vscode/
+
+# Miscellaneous
+*.log
+*.swp
+.DS_Store
+
