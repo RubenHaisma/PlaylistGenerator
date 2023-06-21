@@ -3,6 +3,9 @@
 *.pyo
 __pycache__/
 
+# ignore .cache folder 
+.cache/
+
 # Spotify credentials file
 credentials.txt
 
@@ -17,4 +20,6 @@ venv/
 *.log
 *.swp
 .DS_Store
+
+
 
