@@ -1,5 +1,4 @@
 # Description: This file contains the authenticate function, which prompts the user to enter their Spotify API credentials and returns a Spotify object with the user's access token.
-
 import spotipy
 
 def authenticate():

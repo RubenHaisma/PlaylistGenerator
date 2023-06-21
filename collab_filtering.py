@@ -1,7 +1,7 @@
 # Description: This file contains the collaborative filtering algorithm
 
 def collaborative_filtering(sp):
-    # Get the user's top artists
+    # Get the user's favorite artists
     top_artists = sp.current_user_top_artists(limit=5)
 
     # Print user's favorite artists

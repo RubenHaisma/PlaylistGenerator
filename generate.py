@@ -1,8 +1,6 @@
-# Description: This file contains the main function that generates a playlist based on user preferences.
-
 import random
 
-# import the authenticate, collaborative_filtering, and content_filtering functions from other files
+# Import the authenticate, collaborative_filtering, and content_filtering functions from other files
 from authenticate import authenticate
 from collab_filtering import collaborative_filtering
 from content_filtering import content_filtering
@@ -13,18 +11,24 @@ def generate_playlist():
     # Step 1: Retrieve user preferences for danceability, energy, valence, and novelty
     danceability = float(input("How important is danceability (0.0 - 1.0)? "))
     energy = float(input("How important is energy (0.0 - 1.0)? "))
-    valence = float(input("How important is valence (0.0 - 1.0)? "))
+    valence = float(input("How important is valence(positivity) (0.0 - 1.0)? "))
     novelty_factor = float(input("How important is novelty (0.0 - 1.0)? "))
 
     # Step 2: Prompt the user to choose the playlist generation method
-    method = input("Choose playlist generation method (enter 'genres' or 'artists'): ")
+    method = input("Choose playlist generation method ('genres', 'artists', or 'both'): ")
 
     # Step 3: Perform collaborative filtering or content filtering based on the chosen method
+    recommendations = []
     if method == "genres":
         user_genres = input("Enter your preferred genres (comma-separated): ").split(",")
         recommendations = content_filtering(sp, danceability, energy, valence, user_genres, novelty_factor)
     elif method == "artists":
         recommendations = collaborative_filtering(sp)
+    elif method == "both":
+        user_genres = input("Enter your preferred genres (comma-separated): ").split(",")
+        collaborative_recommendations = collaborative_filtering(sp)
+        content_recommendations = content_filtering(sp, danceability, energy, valence, user_genres, novelty_factor)
+        recommendations = collaborative_recommendations + content_recommendations
     else:
         print("Invalid method chosen. Exiting...")
         return
@@ -38,7 +42,7 @@ def generate_playlist():
     track_ids = [track['id'] for track in recommendations]
     sp.playlist_add_items(playlist['id'], track_ids)
 
-    print("Playlist is generated and tracks are added.")
+    print("Playlist is generated and tracks are added. Enjoy!")
 
 
 # Call the generate_playlist function to generate a playlist
