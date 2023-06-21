@@ -21,5 +21,10 @@ venv/
 *.swp
 .DS_Store
 
+# gitignore and gitattributes
+.gitignore
+.gitattributes
+
+
 
 
