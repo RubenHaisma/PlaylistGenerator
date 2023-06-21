@@ -1,36 +1,37 @@
+# Description: This file contains the authenticate function, which prompts the user to enter their Spotify API credentials and returns a Spotify object with the user's access token.
+
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
 
 def authenticate():
-    # Spotify API credentials
-    CLIENT_ID = '810c12f9f4614384a6dfab29953cd10a'
-    CLIENT_SECRET = '6914cb404b4f456bbccae03f25c0189d'
-    REDIRECT_URI = 'http://localhost:3000/'
+    # Prompt the user to enter their Spotify API credentials
+    CLIENT_ID = input("Enter your Spotify API client ID: ")
+    CLIENT_SECRET = input("Enter your Spotify API client secret: ")
+    REDIRECT_URI = input("Note: Standard URI = http://localhost:3000/" + '\n' "Enter your Spotify API redirect URI: ")
+    USER_ID = input("Note: You can find your user ID by clicking on your profile in the Spotify app. Or go to: https://www.spotify.com/is-en/account/overview/" + '\n' "Enter your Spotify user ID: ")
+    PLAYLIST = input("Enter the name of your new playlist: ")
 
-    # Scope: de toegangsrechten die je wilt voor je applicatie
-    SCOPE = 'playlist-modify-private'
+    # Scope: the access rights you want for your application
+    SCOPE = 'playlist-modify-private playlist-read-private user-top-read user-read-recently-played'
 
-    # Maak een instantie van de SpotifyOAuth-klasse
+    # Create an instance of the SpotifyOAuth class
     sp_oauth = spotipy.oauth2.SpotifyOAuth(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, scope=SCOPE)
 
-    # Genereer de autorisatie-URL
+    # Generate the authorization URL
     auth_url = sp_oauth.get_authorize_url()
 
-    # Vraag de gebruiker om toegang te verlenen via de gegenereerde URL
-    print("Bezoek deze URL en geef toegang:")
+    # Ask the user to grant access via the generated URL
+    print("Visit this URL and grant access:")
     print(auth_url)
-    response = input("Voer de volledige URL in die je na autorisatie hebt ontvangen: ")
+    response = input("Enter the full URL you received after authorization: ")
 
-    # Wissel de autorisatiecode in voor een toegangstoken
+    # Exchange the authorization code for an access token
     code = sp_oauth.parse_response_code(response)
     token_info = sp_oauth.get_access_token(code)
 
-    # Verkrijg het toegangstoken uit de tokeninformatie
+    # Get the access token from the token information
     access_token = token_info['access_token']
 
-    # Maak een Spotify-object met het toegangstoken
+    # Create a Spotify object with the access token
     sp = spotipy.Spotify(auth=access_token)
 
-    return sp
-
-authenticate()
+    return sp, USER_ID, PLAYLIST
