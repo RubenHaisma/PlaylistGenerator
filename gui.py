@@ -1,3 +1,8 @@
+# Copyright (c) [2023] [Ruben Haisma]
+# All rights reserved.
+
+# Description: This file contains the application(GUI) for the Spotify Playlist Generator
+
 import tkinter as tk
 from tkinter import messagebox
 from collab_filtering import collaborative_filtering
