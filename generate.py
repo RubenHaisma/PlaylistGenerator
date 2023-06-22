@@ -1,3 +1,6 @@
+# Copyright (c) [2023] [Ruben Haisma]
+# All rights reserved.
+
 import random
 
 # Import the authenticate, collaborative_filtering, and content_filtering functions from other files
@@ -7,7 +10,7 @@ from content_filtering import content_filtering
 
 def generate_playlist():
     # Step 0: Authenticate the user and create a Spotify object
-    sp, USER_ID, playlist_name = authenticate()
+    sp, USER_ID = authenticate()
     # Step 1: Retrieve user preferences for danceability, energy, valence, and novelty
     danceability = float(input("How important is danceability (0.0 - 1.0)? "))
     energy = float(input("How important is energy (0.0 - 1.0)? "))

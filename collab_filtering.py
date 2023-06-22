@@ -1,3 +1,6 @@
+# Copyright (c) [2023] [Ruben Haisma]
+# All rights reserved.
+
 # Description: This file contains the collaborative filtering algorithm
 
 def collaborative_filtering(sp):

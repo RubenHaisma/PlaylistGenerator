@@ -1,3 +1,6 @@
+# Copyright (c) [2023] [Ruben Haisma]
+# All rights reserved.
+
 # Description: This file contains the content filtering algorithm used to generate recommendations
 
 def content_filtering(sp, danceability, energy, valence, user_genres, novelty_factor):
