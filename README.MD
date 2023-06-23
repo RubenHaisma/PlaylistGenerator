@@ -1,6 +1,6 @@
 # PlaylistGenerator
 
-PlaylistGenerator is a Python algorithm that utilizes collaborative and content filtering to generate personalized playlists based on your music preferences. The algorithm now includes a graphical user interface (GUI) for an enhanced user experience.
+PlaylistGenerator is a Python algorithm that utilizes collaborative and content filtering to generate personalized playlists based on your music preferences. The algorithm includes a graphical user interface (GUI) for an enhanced user experience.
 
 ## How It Works
 
