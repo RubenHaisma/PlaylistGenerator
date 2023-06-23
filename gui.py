@@ -7,36 +7,12 @@ import tkinter as tk
 from tkinter import messagebox
 from collab_filtering import collaborative_filtering
 from content_filtering import content_filtering
-import random
 from authenticate import authenticate
-import spotipy
-
-def authenticate():
-    CLIENT_ID = "23f6f3d5a7f34c7c821587f67733c833"
-    CLIENT_SECRET = "813cafcd03394d808e8214e5c566975c"
-    REDIRECT_URI = "http://localhost:3000/"
-    PLAYLIST = playlist_name_entry.get()
-    USER_ID = "117189269"
-
-    sp_oauth = spotipy.oauth2.SpotifyOAuth(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
-
-    token_info = sp_oauth.get_cached_token()
-    if not token_info:
-        auth_url = sp_oauth.get_authorize_url()
-        print("Visit this URL and grant access:")
-        print(auth_url)
-        response = input("Enter the full URL you received after authorization: ")
-        code = sp_oauth.parse_response_code(response)
-        token_info = sp_oauth.get_access_token(code)
-
-    access_token = token_info['access_token']
-    sp = spotipy.Spotify(auth=access_token)
-
-    return sp, USER_ID, PLAYLIST
+import random
 
 def generate_playlist():
     try:
-        sp, USER_ID, _ = authenticate()
+        sp, USER_ID = authenticate()
         danceability = float(danceability_slider.get())
         energy = float(energy_slider.get())
         valence = float(valence_slider.get())
