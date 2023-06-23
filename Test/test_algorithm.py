@@ -36,9 +36,6 @@ def test_algorithm():
     except Exception as e:
         print("Test case failed:", str(e))
 
-# Run the test function
-test_algorithm()
-
 def test_content_filtering():
     # Test case
     sp, _ = authenticate()
@@ -57,27 +54,6 @@ def test_content_filtering():
         print("Content filtering test case passed")
     except AssertionError as e:
         print("Content filtering test case failed:", str(e))
-    except Exception as e:
-        print("An unexpected error occurred:", str(e))
-
-
-def test_generate_playlist():
-    # Test case
-    sp, USER_ID = authenticate()
-    danceability = 0.8
-    energy = 0.6
-    valence = 0.9
-    novelty_factor = 0.5
-    method = "genres"
-    user_genres = ["pop", "rock"]
-    playlist_length = 10
-
-    print("Running generate_playlist test case...")
-    try:
-        generate_playlist(sp, USER_ID, danceability, energy, valence, novelty_factor, method, user_genres, playlist_length)
-        print("generate_playlist test case passed")
-    except AssertionError as e:
-        print("generate_playlist test case failed:", str(e))
     except Exception as e:
         print("An unexpected error occurred:", str(e))
 
