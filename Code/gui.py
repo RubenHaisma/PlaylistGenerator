@@ -1,6 +1,3 @@
-# Copyright (c) [2023] [Ruben Haisma]
-# All rights reserved.
-
 # Description: This file contains the application(GUI) for the Spotify Playlist Generator
 
 import tkinter as tk
@@ -110,3 +107,9 @@ generate_button.pack()
 
 # Run the application
 window.mainloop()
+
+
+
+
+# Copyright (c) [2023] [Ruben Haisma]
+# All rights reserved.

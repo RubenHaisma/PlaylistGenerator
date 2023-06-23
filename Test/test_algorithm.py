@@ -1,6 +1,7 @@
+# Description: This file contains the test cases for the algorithm.
+
 from authenticate import authenticate
 from content_filtering import content_filtering
-from generate import generate_playlist
 from collab_filtering import collaborative_filtering
 import pytest
 
@@ -77,3 +78,10 @@ def test_collaborative_filtering():
 # Run all the test functions
 if __name__ == "__main__":
     pytest.main()
+
+
+
+
+
+# Copyright (c) [2023] [Ruben Haisma]
+# All rights reserved.
