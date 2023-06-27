@@ -1,5 +1,4 @@
-# Copyright (c) 2023 Ruben Haisma
-# All rights reserved.
+# Description: This file contains the code for generating a playlist using content-based filtering.
 
 import spotipy as sp
 
@@ -31,3 +30,8 @@ def generate_playlist():
 
 if __name__ == '__main__':
     generate_playlist()
+
+
+
+# Copyright (c) 2023 Ruben Haisma
+# All rights reserved.

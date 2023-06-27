@@ -1,7 +1,7 @@
-from sklearn.metrics.pairwise import cosine_similarity
-from authenticate import authenticate
+# Description: Content-based filtering algorithm for generating recommendations
 
 from sklearn.metrics.pairwise import cosine_similarity
+from authenticate import authenticate
 
 def content_based_filtering(sp, top_n):
     # Step 1: Collect User Data
@@ -25,6 +25,7 @@ def content_based_filtering(sp, top_n):
     return recommendations
 
 
+# Get track features for a list of track IDs
 def get_track_features(sp, track_ids):
     track_features = []
     for track_id in track_ids:
@@ -39,6 +40,7 @@ def get_track_features(sp, track_ids):
     return track_features
 
 
+# Build user profile based on track features
 def build_user_profile(track_features):
     user_profile = {
         'danceability': sum(track['danceability'] for track in track_features) / len(track_features),
@@ -49,6 +51,7 @@ def build_user_profile(track_features):
     return user_profile
 
 
+# Get all tracks released in 2022
 def get_all_tracks(sp):
     tracks = sp.search(q='year:2022', type='track', limit=50)['tracks']['items']
     track_ids = [track['id'] for track in tracks]
@@ -69,6 +72,7 @@ def get_all_tracks(sp):
     return all_tracks
 
 
+# Calculate cosine similarity between user profile and all tracks
 def calculate_track_similarities(user_profile, tracks):
     user_matrix = [[user_profile['danceability'], user_profile['energy'], user_profile['valence']]]
     track_matrix = [[track['danceability'], track['energy'], track['valence']] for track in tracks]
@@ -77,6 +81,7 @@ def calculate_track_similarities(user_profile, tracks):
 
     return similarities[0]
 
+# Get top-N recommendations
 def get_top_n_recommendations(similarities, top_n):
     sp = authenticate()
     all_tracks = get_all_tracks(sp)
@@ -101,4 +106,5 @@ def get_top_n_recommendations(similarities, top_n):
 
 
 
-
+# Copyright (c) 2023 Ruben Haisma
+# All rights reserved.
