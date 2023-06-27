@@ -7,7 +7,7 @@ def authenticate():
     CLIENT_SECRET = "813cafcd03394d808e8214e5c566975c"
     REDIRECT_URI = "http://localhost:3000/"
     USER_ID = "117189269"
-    SCOPE = 'playlist-modify-private playlist-read-private user-top-read user-read-recently-played'
+    SCOPE = 'playlist-modify-private playlist-read-private user-top-read user-read-recently-played user-library-read playlist-modify-public'
 
     # Create an instance of the SpotifyOAuth class
     sp_oauth = spotipy.oauth2.SpotifyOAuth(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, scope=SCOPE)
@@ -32,7 +32,7 @@ def authenticate():
     # Create a Spotify object with the access token
     sp = spotipy.Spotify(auth=access_token)
 
-    return sp, USER_ID
+    return sp
 
 
 
