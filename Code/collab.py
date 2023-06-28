@@ -21,7 +21,7 @@ def collab_based_filtering(sp, user_track_matrix, track_indices, top_n):
 
     # Get the user's most recent track
     sp = authenticate()
-    recent_track = sp.current_user_recently_played(limit=1)['items'][0]['track']
+    recent_track = sp.current_user_recently_played(limit=50)['items'][0]['track']
     recent_track_id = recent_track['id']
 
     # Check if the recent track ID is in the track indices dictionary
@@ -76,9 +76,10 @@ def create_user_track_matrix(sp, user_id):
 
     # Create track indices dictionary
     track_indices = {track_id: i for i, track_id in enumerate(df['track_id'].unique())}
+    print(track_indices)
 
-    # Remove duplicate entries
-    df = df.drop_duplicates(['user_id', 'track_id'])
+    # Remove duplicate entries and fill with new values
+    df = df.drop_duplicates(['user_id', 'track_id'], keep='last')
 
     # Convert DataFrame to user-track matrix
     user_track_matrix = df.pivot(index='user_id', columns='track_id', values='interaction').fillna(0)

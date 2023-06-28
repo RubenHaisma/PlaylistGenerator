@@ -15,7 +15,7 @@ def content_based_filtering(sp, top_n):
 
     # Step 1: Collect User Data
     sp = authenticate()
-    user_tracks = sp.current_user_top_tracks(limit=50, time_range='medium_term')['items']
+    user_tracks = sp.current_user_top_tracks(limit= 50, time_range='medium_term')['items']
     user_track_ids = [track['id'] for track in user_tracks]
 
     # Step 2: Extract Track Features
@@ -57,7 +57,7 @@ def get_track_features(sp, track_ids):
             'valence': audio_features['valence']
         })
 
-    #print(track_features)
+    print(track_features)
     return track_features
 
 
@@ -77,7 +77,7 @@ def build_user_profile(track_features):
         'energy': sum(track['energy'] for track in track_features) / len(track_features),
         'valence': sum(track['valence'] for track in track_features) / len(track_features)
     }
-    #print(user_profile)
+    print(user_profile)
     return user_profile
 
 
@@ -144,7 +144,6 @@ def get_top_n_recommendations(similarities, top_n):
     """
 
     sp = authenticate()
-    all_tracks = get_all_tracks(sp)
     recommendations = []
     for i in range(len(similarities)):
         recommendations.append((i, similarities[i]))  # Store track index and similarity
@@ -155,13 +154,11 @@ def get_top_n_recommendations(similarities, top_n):
     track_uris = []
     for recommendation in recommendations:
         track_index = recommendation[0]
-        track_id = all_tracks[track_index]['id']
-        if track_id:
-            track_uri = f"spotify:track:{track_id}"
-            track_uris.append(track_uri)
+        track_uri = f"spotify:track:{track_index}"
+        track_uris.append(track_uri)
 
-    #print(track_uris)
     return track_uris
+
 
 
 # Copyright (c) 2023 Ruben Haisma
