@@ -5,6 +5,14 @@ from content_filtering import content_based_filtering
 import pytest
 
 def test_algorithm():
+    """
+    Test case for the content-based filtering algorithm.
+
+    This test case verifies the functionality of the content-based filtering algorithm by generating
+    recommendations for a specific user and checking if the number of recommendations is at least as
+    requested. It uses the authenticate function to obtain the Spotify object for the user authentication.
+
+    """
     # Test case
     sp = authenticate()
     top_n = 10
@@ -21,5 +29,4 @@ def test_algorithm():
         print("Test case failed:", str(e))
 
 # Run the test function
-if __name__ == "__main__":
-    pytest.main()
+pytest.main()
