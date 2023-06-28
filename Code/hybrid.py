@@ -1,5 +1,5 @@
-from content_filtering import content_based_filtering
-from collab_filtering import create_user_track_matrix, collab_based_filtering
+from collab import create_user_track_matrix, collab_based_filtering
+from content import content_based_filtering
 
 def hybrid_filtering(sp, user_id, top_n):
     """

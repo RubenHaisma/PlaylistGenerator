@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
-from content_filtering import content_based_filtering
-from collab_filtering import create_user_track_matrix, collab_based_filtering
+from content import content_based_filtering
+from collab import create_user_track_matrix, collab_based_filtering
 from authenticate import authenticate
-from hybrid_filtering import hybrid_filtering
+from hybrid import hybrid_filtering
 
 def generate_playlist():
     """

@@ -2,9 +2,9 @@ import spotipy as sp
 
 # Import the authenticate and content_filtering functions from other files
 from authenticate import authenticate
-from content_filtering import content_based_filtering
-from collab_filtering import create_user_track_matrix, collab_based_filtering
-from hybrid_filtering import hybrid_filtering
+from content import content_based_filtering
+from collab import create_user_track_matrix, collab_based_filtering
+from hybrid import hybrid_filtering
 
 def generate_playlist():
     """
