@@ -2,44 +2,7 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from authenticate import authenticate
 
-def create_user_track_matrix(sp, user_id):
-    """
-    Creates a user-track matrix based on user listening history.
 
-    This function retrieves the user's listening history from the Spotify API and creates a user-track matrix,
-    where each row represents a user and each column represents a track. The matrix is populated with interaction
-    values indicating the user's listening activity for each track.
-
-    Parameters:
-        - sp (spotipy.Spotify): The authenticated Spotify object.
-        - user_id (str): The user ID.
-
-    Returns:
-        - user_track_matrix (pd.DataFrame): The user-track matrix.
-        - track_indices (dict): A dictionary mapping track IDs to column indices in the matrix.
-    """
-    # Get user's listening history
-    sp = authenticate()
-    listening_history = sp.current_user_recently_played(limit=50)
-
-    # Create an empty DataFrame
-    df = pd.DataFrame(columns=['user_id', 'track_id', 'interaction'])
-
-    # Iterate over listening history and populate the DataFrame
-    for item in listening_history['items']:
-        track_id = item['track']['id']
-        df = df._append({'user_id': user_id, 'track_id': track_id, 'interaction': 1}, ignore_index=True)
-
-    # Create track indices dictionary
-    track_indices = {track_id: i for i, track_id in enumerate(df['track_id'].unique())}
-
-    # Remove duplicate entries
-    df = df.drop_duplicates(['user_id', 'track_id'])
-
-    # Convert DataFrame to user-track matrix
-    user_track_matrix = df.pivot(index='user_id', columns='track_id', values='interaction').fillna(0)
-
-    return user_track_matrix, track_indices
 
 
 def collab_based_filtering(sp, user_track_matrix, track_indices, top_n):
@@ -78,10 +41,53 @@ def collab_based_filtering(sp, user_track_matrix, track_indices, top_n):
             track_uri = f"spotify:track:{track_id}"
             recommendations.append(track_uri)
 
+        # print(recommendations)
         return recommendations
 
     else:
         raise ValueError("Recent track ID is not in the track indices dictionary.")
+    
+
+def create_user_track_matrix(sp, user_id):
+    """
+    Creates a user-track matrix based on user listening history.
+
+    This function retrieves the user's listening history from the Spotify API and creates a user-track matrix,
+    where each row represents a user and each column represents a track. The matrix is populated with interaction
+    values indicating the user's listening activity for each track.
+
+    Parameters:
+        - sp (spotipy.Spotify): The authenticated Spotify object.
+        - user_id (str): The user ID.
+
+    Returns:
+        - user_track_matrix (pd.DataFrame): The user-track matrix.
+        - track_indices (dict): A dictionary mapping track IDs to column indices in the matrix.
+    """
+    # Get user's listening history
+    sp = authenticate()
+    listening_history = sp.current_user_recently_played(limit=50)
+
+    # Create an empty DataFrame
+    df = pd.DataFrame(columns=['user_id', 'track_id', 'interaction'])
+
+    # Iterate over listening history and input the DataFrame
+    for item in listening_history['items']:
+        track_id = item['track']['id']
+        df = df._append({'user_id': user_id, 'track_id': track_id, 'interaction': 1}, ignore_index=True)
+
+    # Create track indices dictionary
+    track_indices = {track_id: i for i, track_id in enumerate(df['track_id'].unique())}
+
+    # Remove duplicate entries
+    df = df.drop_duplicates(['user_id', 'track_id'])
+
+    # Convert DataFrame to user-track matrix
+    user_track_matrix = df.pivot(index='user_id', columns='track_id', values='interaction').fillna(0)
+
+    # print(user_track_matrix, track_indices)
+    return user_track_matrix, track_indices
+
 
 
 

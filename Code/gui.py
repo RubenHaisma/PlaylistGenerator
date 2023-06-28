@@ -2,8 +2,49 @@ import tkinter as tk
 from tkinter import messagebox
 from content import content_based_filtering
 from collab import create_user_track_matrix, collab_based_filtering
-from authenticate import authenticate
 from hybrid import hybrid_filtering
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+
+def authenticate():
+    """
+    Authenticates the user and returns a Spotify object with the user's access token.
+
+    Returns:
+        sp (spotipy.Spotify): Spotify object with the user's access token.
+    """
+
+    # Get user input for authentication values
+    CLIENT_ID = client_id_entry.get()
+    CLIENT_SECRET = client_secret_entry.get()
+    REDIRECT_URI = redirect_uri_entry.get()
+    USER_ID = user_id_entry.get()
+    SCOPE = 'playlist-modify-private playlist-read-private user-top-read user-read-recently-played user-library-read playlist-modify-public'
+
+    # Create an instance of the SpotifyOAuth class with user input values
+    sp_oauth = SpotifyOAuth(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, scope=SCOPE)
+
+    # Get the cached token
+    token_info = sp_oauth.get_cached_token()
+
+    # If the cached token does not exist, ask the user to grant access via the generated URL
+    if not token_info:
+        auth_url = sp_oauth.get_authorize_url()
+        print("Visit this URL and grant access:")
+        print(auth_url)
+        response = input("Enter the full URL you received after authorization: ")
+
+        # Exchange the authorization code for an access token
+        code = sp_oauth.parse_response_code(response)
+        token_info = sp_oauth.get_access_token(code)
+
+    # Get the access token from the token information
+    access_token = token_info['access_token']
+
+    # Create a Spotify object with the access token
+    sp = spotipy.Spotify(auth=access_token)
+
+    return sp
 
 def generate_playlist():
     """
@@ -53,10 +94,36 @@ SPOTIFY_GREEN = "#1DB954"
 # Create the window
 window = tk.Tk()
 window.title("Playlist Generator")
-window.geometry("376x520")
+window.geometry("376x580")
 window.configure(bg=SPOTIFY_GREEN)
 
 # Create the widgets
+authentication_label = tk.Label(window, text="Authentication:", bg=SPOTIFY_GREEN, fg="white")
+authentication_label.pack()
+
+client_id_label = tk.Label(window, text="Client ID:", bg=SPOTIFY_GREEN, fg="white")
+client_id_label.pack()
+client_id_entry = tk.Entry(window)
+client_id_entry.pack()
+
+client_secret_label = tk.Label(window, text="Client Secret:", bg=SPOTIFY_GREEN, fg="white")
+client_secret_label.pack()
+client_secret_entry = tk.Entry(window)
+client_secret_entry.pack()
+
+redirect_uri_label = tk.Label(window, text="Redirect URI:", bg=SPOTIFY_GREEN, fg="white")
+redirect_uri_label.pack()
+redirect_uri_entry = tk.Entry(window)
+redirect_uri_entry.pack()
+
+user_id_label = tk.Label(window, text="User ID:", bg=SPOTIFY_GREEN, fg="white")
+user_id_label.pack()
+user_id_entry = tk.Entry(window)
+user_id_entry.pack()
+
+# Create a space between the authentication and playlist options
+tk.Label(window, text="", bg=SPOTIFY_GREEN).pack()
+
 playlist_name_label = tk.Label(window, text="Name your new playlist:", bg=SPOTIFY_GREEN, fg="white")
 playlist_name_label.pack()
 playlist_name_entry = tk.Entry(window)
@@ -94,9 +161,3 @@ generate_button.pack()
 
 # Run the application
 window.mainloop()
-
-
-
-
-# Copyright (c) 2023 Ruben Haisma
-# All rights reserved.

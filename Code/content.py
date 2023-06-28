@@ -31,6 +31,7 @@ def content_based_filtering(sp, top_n):
     # Step 5: Generate Recommendations
     recommendations = get_top_n_recommendations(similarities, top_n)
 
+    #print(recommendations)
     return recommendations
 
 
@@ -56,6 +57,7 @@ def get_track_features(sp, track_ids):
             'valence': audio_features['valence']
         })
 
+    #print(track_features)
     return track_features
 
 
@@ -75,7 +77,7 @@ def build_user_profile(track_features):
         'energy': sum(track['energy'] for track in track_features) / len(track_features),
         'valence': sum(track['valence'] for track in track_features) / len(track_features)
     }
-
+    #print(user_profile)
     return user_profile
 
 
@@ -104,6 +106,7 @@ def get_all_tracks(sp):
             'valence': audio_feature['valence']
         })
 
+    #print(all_tracks)
     return all_tracks
 
 
@@ -124,6 +127,7 @@ def calculate_track_similarities(user_profile, tracks):
 
     similarities = cosine_similarity(user_matrix, track_matrix)
 
+    #print(similarities)
     return similarities[0]
 
 
@@ -156,6 +160,7 @@ def get_top_n_recommendations(similarities, top_n):
             track_uri = f"spotify:track:{track_id}"
             track_uris.append(track_uri)
 
+    #print(track_uris)
     return track_uris
 
 
