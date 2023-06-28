@@ -23,6 +23,7 @@ def hybrid_filtering(sp, user_id, top_n):
     # Step 3: Combine Recommendations
     recommendations = content_recommendations + collab_recommendations
 
+    # print(recommendations)
     return recommendations
 
 

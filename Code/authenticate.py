@@ -12,7 +12,6 @@ def authenticate():
     CLIENT_ID = "23f6f3d5a7f34c7c821587f67733c833"
     CLIENT_SECRET = "813cafcd03394d808e8214e5c566975c"
     REDIRECT_URI = "http://localhost:3000/"
-    USER_ID = "117189269"
     SCOPE = 'playlist-modify-private playlist-read-private user-top-read user-read-recently-played user-library-read playlist-modify-public'
 
     # Create an instance of the SpotifyOAuth class

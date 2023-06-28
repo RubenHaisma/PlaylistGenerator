@@ -3,8 +3,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 from authenticate import authenticate
 
 
-
-
 def collab_based_filtering(sp, user_track_matrix, track_indices, top_n):
     """
     Generates collaborative filtering recommendations based on the user-track matrix.

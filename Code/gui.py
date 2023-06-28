@@ -5,6 +5,7 @@ from collab import create_user_track_matrix, collab_based_filtering
 from hybrid import hybrid_filtering
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import webbrowser
 
 def authenticate():
     """
@@ -18,7 +19,6 @@ def authenticate():
     CLIENT_ID = client_id_entry.get()
     CLIENT_SECRET = client_secret_entry.get()
     REDIRECT_URI = redirect_uri_entry.get()
-    USER_ID = user_id_entry.get()
     SCOPE = 'playlist-modify-private playlist-read-private user-top-read user-read-recently-played user-library-read playlist-modify-public'
 
     # Create an instance of the SpotifyOAuth class with user input values
@@ -84,6 +84,9 @@ def generate_playlist():
         # Get the URL of the playlist
         playlist_url = playlist['external_urls']['spotify']
 
+        # After the playlist is generated, automatically open the playlist in the browser
+        webbrowser.open(playlist_url)
+
         messagebox.showinfo("Success", f"Playlist is generated and tracks are added.\nYou can access it at:\n{playlist_url}")
     except Exception as e:
         messagebox.showerror("Error", str(e))
@@ -115,11 +118,6 @@ redirect_uri_label = tk.Label(window, text="Redirect URI:", bg=SPOTIFY_GREEN, fg
 redirect_uri_label.pack()
 redirect_uri_entry = tk.Entry(window)
 redirect_uri_entry.pack()
-
-user_id_label = tk.Label(window, text="User ID:", bg=SPOTIFY_GREEN, fg="white")
-user_id_label.pack()
-user_id_entry = tk.Entry(window)
-user_id_entry.pack()
 
 # Create a space between the authentication and playlist options
 tk.Label(window, text="", bg=SPOTIFY_GREEN).pack()
