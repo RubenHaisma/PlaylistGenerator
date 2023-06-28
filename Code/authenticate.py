@@ -1,8 +1,13 @@
-# Description: This file contains the authenticate function, which prompts the user to enter their Spotify API credentials and returns a Spotify object with the user's access token.
-
 import spotipy
 
 def authenticate():
+    """
+    Authenticates the user and returns a Spotify object with the user's access token.
+
+    Returns:
+        sp (spotipy.Spotify): Spotify object with the user's access token.
+    """
+
     # Change the credentials to your own Spotify API credentials if you want to use this code
     CLIENT_ID = "23f6f3d5a7f34c7c821587f67733c833"
     CLIENT_SECRET = "813cafcd03394d808e8214e5c566975c"
@@ -34,6 +39,7 @@ def authenticate():
     sp = spotipy.Spotify(auth=access_token)
 
     return sp
+
 
 
 

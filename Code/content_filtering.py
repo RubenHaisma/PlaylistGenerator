@@ -1,9 +1,18 @@
-# Description: Content-based filtering algorithm for generating recommendations
-
 from sklearn.metrics.pairwise import cosine_similarity
 from authenticate import authenticate
 
 def content_based_filtering(sp, top_n):
+    """
+    Performs content-based filtering algorithm to generate recommendations based on user's top tracks.
+
+    Args:
+        sp (spotipy.Spotify): Spotify object with user authentication.
+        top_n (int): Number of recommendations to generate.
+
+    Returns:
+        recommendations (list): List of recommended track URIs.
+    """
+
     # Step 1: Collect User Data
     sp = authenticate()
     user_tracks = sp.current_user_top_tracks(limit=50, time_range='medium_term')['items']
@@ -25,8 +34,18 @@ def content_based_filtering(sp, top_n):
     return recommendations
 
 
-# Get track features for a list of track IDs
 def get_track_features(sp, track_ids):
+    """
+    Retrieves track features for a list of track IDs.
+
+    Args:
+        sp (spotipy.Spotify): Spotify object with user authentication.
+        track_ids (list): List of track IDs.
+
+    Returns:
+        track_features (list): List of dictionaries containing track features.
+    """
+
     track_features = []
     for track_id in track_ids:
         audio_features = sp.audio_features(track_id)[0]
@@ -40,8 +59,17 @@ def get_track_features(sp, track_ids):
     return track_features
 
 
-# Build user profile based on track features
 def build_user_profile(track_features):
+    """
+    Builds user profile based on track features.
+
+    Args:
+        track_features (list): List of dictionaries containing track features.
+
+    Returns:
+        user_profile (dict): User profile based on track features.
+    """
+
     user_profile = {
         'danceability': sum(track['danceability'] for track in track_features) / len(track_features),
         'energy': sum(track['energy'] for track in track_features) / len(track_features),
@@ -51,8 +79,17 @@ def build_user_profile(track_features):
     return user_profile
 
 
-# Get all tracks released in 2022
 def get_all_tracks(sp):
+    """
+    Retrieves all tracks released in 2022.
+
+    Args:
+        sp (spotipy.Spotify): Spotify object with user authentication.
+
+    Returns:
+        all_tracks (list): List of dictionaries containing track information.
+    """
+
     tracks = sp.search(q='year:2022', type='track', limit=50)['tracks']['items']
     track_ids = [track['id'] for track in tracks]
 
@@ -67,13 +104,21 @@ def get_all_tracks(sp):
             'valence': audio_feature['valence']
         })
 
-    print("All tracks: ", all_tracks)  # Debugging print statement
-
     return all_tracks
 
 
-# Calculate cosine similarity between user profile and all tracks
 def calculate_track_similarities(user_profile, tracks):
+    """
+    Calculates cosine similarity between user profile and all tracks.
+
+    Args:
+        user_profile (dict): User profile based on track features.
+        tracks (list): List of dictionaries containing track information.
+
+    Returns:
+        similarities (list): List of cosine similarity scores.
+    """
+
     user_matrix = [[user_profile['danceability'], user_profile['energy'], user_profile['valence']]]
     track_matrix = [[track['danceability'], track['energy'], track['valence']] for track in tracks]
 
@@ -81,8 +126,19 @@ def calculate_track_similarities(user_profile, tracks):
 
     return similarities[0]
 
-# Get top-N recommendations
+
 def get_top_n_recommendations(similarities, top_n):
+    """
+    Gets top-N recommendations based on cosine similarity scores.
+
+    Args:
+        similarities (list): List of cosine similarity scores.
+        top_n (int): Number of recommendations to generate.
+
+    Returns:
+        recommendations (list): List of recommended track URIs.
+    """
+
     sp = authenticate()
     all_tracks = get_all_tracks(sp)
     recommendations = []
@@ -100,10 +156,7 @@ def get_top_n_recommendations(similarities, top_n):
             track_uri = f"spotify:track:{track_id}"
             track_uris.append(track_uri)
 
-    print("Track URIs: ", track_uris)  # Debugging print statement
-
     return track_uris
-
 
 
 # Copyright (c) 2023 Ruben Haisma
